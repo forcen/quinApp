@@ -1,0 +1,9 @@
+.list {
+
+}
+#osm {width: 800px;height: 600px;}
+
+.loading {
+  padding: 2em;
+  background-color: white;
+}

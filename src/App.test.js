@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+test('renders app', () => {
+    const { container } = render(<App />);
+
+    const searchElement = screen.getByText(/Find Launches!/i);
+    const mapElement = screen.getByTestId('map');
+
+    expect(searchElement).toBeInTheDocument();
+    expect(mapElement).toBeInTheDocument();
 });

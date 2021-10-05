@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+import { Searcher, Launches } from './components';
+import logo from './assets/round_logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const queryClient = new QueryClient();
+
+const App = () => {
+    return (
+        <QueryClientProvider client={queryClient}>
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <span>Moonshot Calendar Inc.</span>
+                </header>
+                <Searcher open={false} />
+                <Launches />
+            </div>
+        </QueryClientProvider>
+    );
+};
 
 export default App;
