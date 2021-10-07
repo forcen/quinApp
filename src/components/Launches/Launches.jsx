@@ -5,11 +5,11 @@ import { useQuery } from 'react-query'
 import styles from './Launches.css';
 
 const loadMap = (pads) => {
-    const lat = 40.737;
-    const lon = -73.923;
+    const lat = 40;
+    const lon = 25;
     const L = window.L;
 
-    const osmMap = L.map('osm').setView({lon: lon, lat: lat}, 1);
+    const osmMap = L.map('osm').setView({lon: lon, lat: lat}, 3);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
@@ -19,7 +19,10 @@ const loadMap = (pads) => {
     L.control.scale().addTo(osmMap);
 
     pads.forEach(marker => { 
-        const content = `<h2>${marker.name}<h2><p>To be launched from <a href="${marker.pad.url}" target="_blank">${marker.pad.name}</a></p>`;
+        const content = `<h2>${marker.name}<h2>
+            <p>To be launched from 
+                <a href="${marker.pad.url}" target="_blank">${marker.pad.location.name}</a>
+            </p>`;
 
         L.marker({lon: marker.pad.longitude, lat: marker.pad.latitude}).bindPopup(content).addTo(osmMap);
     });
@@ -28,7 +31,7 @@ const loadMap = (pads) => {
 }
 
 const Launches = () => {
-    const launchesQuery = 'https://ll.thespacedevs.com/2.2.0/launch/upcoming/?is_crewed=false&include_suborbital=true&related=false&hide_recent_previous=false';
+    const launchesQuery = 'http://localhost:3004/launchs';
 
     const { error, data, isFetching } = useQuery('launches', () =>
         fetch(launchesQuery)
@@ -36,8 +39,8 @@ const Launches = () => {
     )
 
     useEffect(() => {
-        if(data?.results) {
-            loadMap(data.results);
+        if(data) {
+            loadMap(data);
         }
     }, [data]);
 
